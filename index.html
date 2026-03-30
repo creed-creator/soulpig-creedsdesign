@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Pig BBQ | Decatur, IN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#c9a84c;
+    --dark:#1a1109;
+    --smoke:#2a1f10;
+    --charcoal:#3d2e1a;
+    --cream:#f8f0e3;
+    --text:#1a1109;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s ease}
+  nav.scrolled{background:rgba(26,17,9,.92);backdrop-filter:blur(12px);padding:12px 40px;box-shadow:0 2px 20px rgba(0,0,0,.4)}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;letter-spacing:.05em}
+  .nav-links{display:flex;gap:30px;list-style:none}
+  .nav-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .3s}
+  .nav-links a:hover{color:var(--gold)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+  .hamburger span{display:block;width:24px;height:2px;background:#fff;transition:all .3s}
+  .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,17,9,.97);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:30px}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{color:#fff;text-decoration:none;font-family:'Playfair Display',serif;font-size:1.8rem;transition:color .3s}
+  .mobile-menu a:hover{color:var(--gold)}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .hero-slides{position:absolute;inset:0}
+  .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease;animation:kenBurns 8s ease-in-out infinite alternate}
+  .hero-slide.active{opacity:1}
+  @keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.08)}}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,17,9,.78) 0%,rgba(42,31,16,.55) 60%,rgba(26,17,9,.35) 100%)}
+  .hero-content{position:relative;z-index:2;text-align:center;padding:20px;max-width:800px}
+  .hero-eyebrow{display:inline-block;color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s .3s forwards}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,8vw,5.5rem);color:#fff;line-height:1.1;margin-bottom:20px;opacity:0;animation:fadeUp .8s .6s forwards}
+  .hero-title em{color:var(--gold);font-style:italic}
+  .hero-subtitle{color:rgba(255,255,255,.82);font-size:1.1rem;font-weight:300;letter-spacing:.04em;margin-bottom:36px;opacity:0;animation:fadeUp .8s .9s forwards}
+  .hero-cta{display:inline-flex;gap:16px;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .8s 1.2s forwards}
+  .btn-primary{display:inline-block;padding:14px 32px;background:var(--gold);color:var(--dark);font-weight:600;font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;border:2px solid var(--gold)}
+  .btn-primary:hover{background:transparent;color:var(--gold)}
+  .btn-outline{display:inline-block;padding:14px 32px;background:transparent;color:#fff;font-weight:600;font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:2px solid rgba(255,255,255,.6);transition:all .3s}
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+  /* STATS */
+  .stats{background:var(--smoke);padding:30px 40px;display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+  .stat{text-align:center;padding:18px 40px;position:relative}
+  .stat:not(:last-child)::after{content:'';position:absolute;right:0;top:25%;height:50%;width:1px;background:rgba(255,255,255,.15)}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);line-height:1}
+  .stat-label{color:rgba(255,255,255,.6);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
+
+  /* ABOUT */
+  .about{padding:100px 40px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .about-img-wrap{position:relative}
+  .about-img{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .about-frame{position:absolute;bottom:-20px;right:-20px;width:65%;height:65%;border:3px solid var(--gold);z-index:-1}
+  .about-tag{display:inline-block;color:var(--gold);font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+  .about h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--dark);line-height:1.25;margin-bottom:22px}
+  .about p{color:#5a4a35;font-size:.97rem;line-height:1.8;margin-bottom:18px}
+  .feature-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+  .feat-card{padding:18px;border:1px solid rgba(201,168,76,.25);transition:all .3s;background:#fff}
+  .feat-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 8px 24px rgba(201,168,76,.15)}
+  .feat-card h4{font-size:.85rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dark);margin-bottom:6px}
+  .feat-card p{font-size:.82rem;color:#7a6450;line-height:1.5}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(40px);transition:all .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* MENU */
+  .menu-section{padding:100px 40px;background:var(--dark)}
+  .menu-section .section-head{text-align:center;margin-bottom:50px}
+  .menu-section .section-tag{color:var(--gold);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .menu-section h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-top:10px}
+  .menu-tabs{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:40px;border-bottom:1px solid rgba(255,255,255,.12)}
+  .menu-tab{padding:12px 28px;color:rgba(255,255,255,.55);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;cursor:pointer;border:none;background:none;transition:all .3s;position:relative}
+  .menu-tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+  .menu-tab.active{color:var(--gold)}
+  .menu-tab.active::after,.menu-tab:hover::after{transform:scaleX(1)}
+  .menu-tab:hover{color:rgba(255,255,255,.85)}
+  .menu-panel{display:none;max-width:900px;margin:0 auto}
+  .menu-panel.active{display:block}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .menu-item{padding:18px 20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);transition:all .3s}
+  .menu-item:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.05)}
+  .menu-item-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .menu-item-name{font-weight:600;font-size:.9rem;color:#fff;letter-spacing:.03em}
+  .menu-item-price{color:var(--gold);font-weight:700;font-size:.9rem;font-family:'Playfair Display',serif;white-space:nowrap;margin-left:12px}
+  .menu-item-desc{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5}
+
+  /* GALLERY */
+  .gallery{padding:80px 40px;background:#f4ece0}
+  .gallery .section-head{text-align:center;margin-bottom:40px}
+  .gallery .section-tag{color:var(--gold);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .gallery h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--dark);margin-top:10px}
+  .gallery-mosaic{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:250px 250px;gap:10px}
+  .gallery-item{overflow:hidden;position:relative}
+  .gallery-item:first-child{grid-row:1/3;grid-column:1/2}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .gallery-item:hover img{transform:scale(1.07)}
+
+  /* TESTIMONIAL */
+  .testimonial{padding:80px 40px;background:var(--charcoal);text-align:center}
+  .testimonial blockquote{max-width:720px;margin:0 auto;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.7rem);color:#fff;line-height:1.65;position:relative;padding:0 40px}
+  .testimonial blockquote::before,.testimonial blockquote::after{content:'"';font-size:4rem;color:var(--gold);line-height:0;vertical-align:-.4em;position:absolute}
+  .testimonial blockquote::before{left:0;top:.3em}
+  .testimonial blockquote::after{right:0;bottom:-.1em}
+  .testimonial cite{display:block;margin-top:24px;color:var(--gold);font-style:normal;font-family:'Inter',sans-serif;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase}
+
+  /* CONTACT */
+  .contact{padding:100px 40px;background:var(--cream)}
+  .contact .section-head{text-align:center;margin-bottom:60px}
+  .contact .section-tag{color:var(--gold);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .contact h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--dark);margin-top:10px}
+  .contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto}
+  .contact-card{padding:36px 28px;text-align:center;border:1px solid rgba(201,168,76,.25);background:#fff;transition:all .35s;cursor:pointer}
+  .contact-card:hover{border-color:var(--gold);transform:translateY(-6px);box-shadow:0 12px 36px rgba(201,168,76,.18)}
+  .contact-card .icon{font-size:1.8rem;margin-bottom:14px}
+  .contact-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dark);margin-bottom:8px}
+  .contact-card p,.contact-card a{color:#7a6450;font-size:.88rem;line-height:1.6;text-decoration:none}
+  .contact-card a:hover{color:var(--gold)}
+
+  /* FOOTER */
+  footer{background:var(--dark);padding:40px;text-align:center}
+  footer p{color:rgba(255,255,255,.4);font-size:.78rem;letter-spacing:.05em}
+  footer strong{color:rgba(255,255,255,.7)}
+
+  /* RESPONSIVE */
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    nav.scrolled{padding:10px 20px}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+    .about{grid-template-columns:1fr;gap:40px}
+    .about-frame{display:none}
+    .feature-cards{grid-template-columns:1fr}
+    .stats{gap:0}
+    .stat{padding:16px 20px;flex:1;min-width:140px}
+    .menu-section{padding:70px 20px}
+    .menu-grid{grid-template-columns:1fr}
+    .gallery-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+    .gallery-item:first-child{grid-row:auto;grid-column:auto}
+    .contact-cards{grid-template-columns:1fr}
+    .about,.gallery,.contact{padding:70px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">Soul Pig BBQ</div>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Visit</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">Our Story</a>
+  <a href="#menu" onclick="toggleMenu()">Menu</a>
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#contact" onclick="toggleMenu()">Visit</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('photo1.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('photo2.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('photo3.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Downtown Decatur, Indiana</span>
+    <h1 class="hero-title">Real BBQ.<br><em>Real Flavor.</em></h1>
+    <p class="hero-subtitle">Slow-smoked brisket, hand-pulled pork, and craft beer<br>in the heart of downtown Decatur.</p>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-primary">See the Menu</a>
+      <a href="tel:+12603019800" class="btn-outline">Call Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat"><div class="stat-num">4.5★</div><div class="stat-label">Google Rating</div></div>
+  <div class="stat"><div class="stat-num">870+</div><div class="stat-label">Happy Customers</div></div>
+  <div class="stat"><div class="stat-num">#3</div><div class="stat-label">in Decatur</div></div>
+  <div class="stat"><div class="stat-num">Daily</div><div class="stat-label">Specials</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-wrap reveal">
+    <img src="photo4.jpg" alt="Soul Pig BBQ interior" class="about-img" loading="lazy">
+    <div class="about-frame"></div>
+  </div>
+  <div class="reveal">
+    <span class="about-tag">Our Story</span>
+    <h2>Decatur's Favorite BBQ Joint</h2>
+    <p>Soul Pig BBQ has been bringing Texas-style slow-smoked barbecue to downtown Decatur since day one. Co-owners Mark Graves and Chad Silva have built a reputation for brisket so tender it practically melts, pulled pork cooked low and slow over applewood, and craft beer that pairs perfectly with everything on the menu.</p>
+    <p>With daily specials that keep regulars coming back, house-made BBQ sauces you can't get anywhere else, and an atmosphere that feels like a neighborhood hangout — Soul Pig is the real deal.</p>
+    <div class="feature-cards">
+      <div class="feat-card"><h4>Texas-Style Brisket</h4><p>Hand-chopped and slow-smoked to perfection</p></div>
+      <div class="feat-card"><h4>Craft Beer & Moonshine</h4><p>Local taps and a full bar selection</p></div>
+      <div class="feat-card"><h4>Daily Specials</h4><p>Fresh rotating menu every single day</p></div>
+      <div class="feat-card"><h4>Family & Groups</h4><p>Platters that feed 4–5 people easily</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-head reveal">
+    <div class="section-tag">What We Smoke</div>
+    <h2>The Menu</h2>
+  </div>
+  <div class="menu-tabs reveal">
+    <button class="menu-tab active" onclick="showTab('platters')">Platters</button>
+    <button class="menu-tab" onclick="showTab('sammies')">Sammies</button>
+    <button class="menu-tab" onclick="showTab('entrees')">Entrees</button>
+    <button class="menu-tab" onclick="showTab('sides')">Sides</button>
+  </div>
+
+  <div class="menu-panel active" id="platters">
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">1 Meat & 2 Sides</span><span class="menu-item-price">$13.99</span></div><p class="menu-item-desc">Choice of smoked meat with two house-made sides</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">2 Meats & 2 Sides</span><span class="menu-item-price">$19.99</span></div><p class="menu-item-desc">Double the meat, all the flavor — fan favorite</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">3 Meats & 2 Sides</span><span class="menu-item-price">$26.99</span></div><p class="menu-item-desc">The full spread — perfect for the hungry</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Wolfe Family Feast</span><span class="menu-item-price">$48.00</span></div><p class="menu-item-desc">7 meats + 3 sides — feeds 4–5 people easily</p></div>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="sammies">
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Brisket Sammy</span><span class="menu-item-price">$17.00</span></div><p class="menu-item-desc">Hand-chopped Texas brisket on a brioche bun with your choice of BBQ sauce</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Pulled Pork Sammy</span><span class="menu-item-price">$13.00</span></div><p class="menu-item-desc">Applewood slow-smoked pulled pork with vinegar onions and dill pickles</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Pulled Pork Tacos</span><span class="menu-item-price">$13.99</span></div><p class="menu-item-desc">Smoked pulled pork, blue cheese slaw, red BBQ sauce, spicy sour cream on flour tortilla with 1 side</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Turkey Breast Sammy</span><span class="menu-item-price">$13.00</span></div><p class="menu-item-desc">Juicy sliced smoked turkey on toasted brioche with BBQ sauce and a side</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Bologna Sammy</span><span class="menu-item-price">$13.00</span></div><p class="menu-item-desc">Smoked beef/pork bologna with apple orchard dust seasoning and BBQ sauce</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">B&B Bomb Burger</span><span class="menu-item-price">$14.00+</span></div><p class="menu-item-desc">House-ground chuck burger with brisket, bacon, and bold blue cheese</p></div>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="entrees">
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Brisket Entree</span><span class="menu-item-price">$22.00</span></div><p class="menu-item-desc">12 oz beef brisket with sweet/smoky BBQ sauce, cornbread, and your choice of side</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Blackened Salmon</span><span class="menu-item-price">$18.00</span></div><p class="menu-item-desc">Grilled salmon seasoned with blackened spices</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Full Slab St. Louis Ribs</span><span class="menu-item-price">$24.00</span></div><p class="menu-item-desc">Tender St. Louis ribs, slow-cooked for rich, smoky flavor</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Half Slab St. Louis Ribs</span><span class="menu-item-price">$16.00</span></div><p class="menu-item-desc">Half slab of tender smoked St. Louis ribs</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Smoked Half Chicken</span><span class="menu-item-price">$14.00</span></div><p class="menu-item-desc">Tender, full-flavored smoked half chicken</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Turkey Breast Entree</span><span class="menu-item-price">$15.00</span></div><p class="menu-item-desc">12 oz sliced smoked turkey breast with cornbread and side</p></div>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="sides">
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Bacon Mac & Cheese</span><span class="menu-item-price">$5.00</span></div><p class="menu-item-desc">Creamy mac loaded with crispy bacon</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Brisket Baked Beans</span><span class="menu-item-price">$5.00</span></div><p class="menu-item-desc">House-made beans slow-cooked with smoked brisket</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Coleslaw</span><span class="menu-item-price">$5.00</span></div><p class="menu-item-desc">Classic creamy coleslaw made fresh in-house</p></div>
+      <div class="menu-item"><div class="menu-item-top"><span class="menu-item-name">Potato Salad</span><span class="menu-item-price">$5.00</span></div><p class="menu-item-desc">Home-style potato salad</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-head reveal">
+    <div class="section-tag">Fresh from the Pit</div>
+    <h2>Gallery</h2>
+  </div>
+  <div class="gallery-mosaic reveal">
+    <div class="gallery-item"><img src="photo5.jpg" alt="Soul Pig BBQ food" loading="lazy"></div>
+    <div class="gallery-item"><img src="photo7.jpg" alt="Soul Pig BBQ" loading="lazy"></div>
+    <div class="gallery-item"><img src="photo8.jpg" alt="Soul Pig BBQ" loading="lazy"></div>
+    <div class="gallery-item"><img src="photo2.jpg" alt="Soul Pig BBQ interior" loading="lazy"></div>
+    <div class="gallery-item"><img src="photo3.jpg" alt="Soul Pig BBQ" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial reveal">
+  <blockquote>
+    I travel the Midwest as a consulting veterinarian and make it a point to visit local restaurants. Soul Pig is literally my favorite place to eat in the Midwest. I regularly travel a couple of hours to eat here.
+  </blockquote>
+  <cite>— TripAdvisor Reviewer, Decatur, IN</cite>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-head reveal">
+    <div class="section-tag">Come Hungry</div>
+    <h2>Find Us</h2>
+  </div>
+  <div class="contact-cards reveal">
+    <div class="contact-card" onclick="window.open('tel:+12603019800')">
+      <div class="icon">📞</div>
+      <h3>Call or Text</h3>
+      <a href="tel:+12603019800">(260) 301-9800</a>
+    </div>
+    <div class="contact-card" onclick="window.open('https://maps.google.com/?q=135+S+2nd+St+Decatur+IN+46733')">
+      <div class="icon">📍</div>
+      <h3>Location</h3>
+      <p>135 S 2nd St<br>Decatur, IN 46733</p>
+    </div>
+    <div class="contact-card">
+      <div class="icon">🕐</div>
+      <h3>Hours</h3>
+      <p>Tue – Fri: 11am – 9pm<br>Saturday: 11am – 9pm<br>Sun – Mon: Closed</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Soul Pig BBQ</strong> &nbsp;|&nbsp; 135 S 2nd St, Decatur, IN 46733 &nbsp;|&nbsp; <a href="tel:+12603019800" style="color:rgba(255,255,255,.5);text-decoration:none">(260) 301-9800</a></p>
+  <p style="margin-top:8px">Traditional BBQ &amp; Soul Food &bull; Craft Beer &bull; Daily Specials</p>
+</footer>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60)
+  })
+
+  // Mobile menu
+  function toggleMenu(){
+    document.getElementById('mobileMenu').classList.toggle('open')
+  }
+
+  // Hero slideshow
+  let current=0
+  const slides=document.querySelectorAll('.hero-slide')
+  setInterval(()=>{
+    slides[current].classList.remove('active')
+    current=(current+1)%slides.length
+    slides[current].classList.add('active')
+  },5000)
+
+  // Menu tabs
+  function showTab(id){
+    document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'))
+    document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'))
+    document.getElementById(id).classList.add('active')
+    event.target.classList.add('active')
+  }
+
+  // Scroll reveal
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})
+  },{threshold:.12})
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
+</script>
+</body>
+</html>
